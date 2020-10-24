@@ -1,0 +1,278 @@
+#!/bin/sh
+
+POSIXLY_CORRECT=yes
+
+# ERROR MESSAGES
+ERROR_PREFIX="ERROR: "
+ERROR_REALPATH_ULITITY_UNAVAILABLE=$ERROR_PREFIX"Realpath utility is not available!";
+ERROR_EMPTY_VAR_WEDI_RC=$ERROR_PREFIX"\$WEDI_RC is not set!";
+ERROR_NOT_FILE_NOT_DIR=$ERROR_PREFIX"Given path is not a valid file or directory!";
+ERROR_READ_RC_MISSING_PARAMETER=$ERROR_PREFIX"readRC() needs two arguments to function properly!";
+ERROR_NO_PREV_EDITED_FILE=$ERROR_PREFIX"No previously edited file was found in this directory!";
+ERROR_INVALID_USE_ARG=$ERROR_PREFIX"Invalid use of arguments!";
+ERROR_MOSTLY_EDIT=$ERROR_PREFIX"Could not find mostly edited file!";
+ERROR_NO_MATCHING_ITEMS=$ERROR_PREFIX"Could not find any items matching given conditions!";
+
+#VARIABLES
+SCRIPT_PATH=$(realpath .)
+
+# CHECK IF REALPATH UTILITY IS AVAILABLE
+if ! [ -x "$(command -v realpath)" ]; then
+  echo $ERROR_REALPATH_ULITITY_UNAVAILABLE >&2
+  exit 1
+fi
+
+# CHECK IF $WEDI_RC IS SET AND IS A FILE
+if [  -z ${WEDI_RC} ]; then
+    echo $ERROR_EMPTY_VAR_WEDI_RC >&2
+    exit 1
+else
+    if ! [ -f ${WEDI_RC} ]; then
+        for f in ${WEDI_RC}; do
+            mkdir -p -- "$(dirname -- "$f")"
+            touch -- "$f"
+        done
+    fi
+fi
+
+# GET WEDI_RC FILE LINES COUNT
+getLinesCount () {
+    if [ -z ${1} ]; then
+        echo "$(wc -l < $WEDI_RC)"
+    else
+        echo "$(grep -o "$1" $WEDI_RC | wc -l)"
+    fi
+}
+
+# READ FROM WEDI_RC FILE
+readRC () {
+    if [ -z ${1} ] || [ -z ${2} ]; then
+        echo $ERROR_READ_RC_MISSING_PARAMETER >&2
+        exit 1
+    fi
+
+    case "$1" in
+        name)
+            echo "$(head -n "$2" $WEDI_RC | tail -n 1 | cut -f 1 -d '|' )"
+            ;;
+        path)
+            echo "$(head -n "$2" $WEDI_RC | tail -n 1 | cut -f 2 -d '|' )"
+            ;;
+        date)
+            echo "$(head -n "$2" $WEDI_RC | tail -n 1 | cut -f 3 -d '|' )"
+            ;;
+    esac
+}
+
+# GET ONLY FILES IN DIRECTORY
+getDirFiles () {
+    PARAM_PATH=$(realpath $1)
+
+    for file in ${PARAM_PATH}/*; do
+        if [ -f ${PARAM_PATH}"/"${file##*/} ]; then
+            grep "${file##*/}" $WEDI_RC
+        fi
+    done
+}
+
+# GET LAST OPENED FILE
+getLastEdit (){
+    PARAM_PATH=$(realpath $1)
+
+    tac $WEDI_RC | grep "$PARAM_PATH[^/]*" | cut -f 1 -d '|' | while read LINE
+    do
+        if [ -f ${PARAM_PATH}/${LINE} ]; then
+            echo $LINE
+            return
+        fi
+    done
+}
+
+# GET MOSTLY OPENED FILE
+getMostEdit (){
+    PARAM_PATH=$(realpath $1)
+
+    FILE_PATH="$(getDirFiles $PARAM_PATH  | grep "$PARAM_PATH[^/]*" | cut -f 2 -d '|' | sort | uniq -c | sort -n -r | head -n 1 | grep -o "/.*[^|]")"
+    if [ -f ${FILE_PATH} ] && ! [ -z ${FILE_PATH} ]; then
+        editFile $FILE_PATH
+        exit 0
+    fi
+
+    echo $ERROR_MOSTLY_EDIT >&2;
+    exit 1
+}
+
+# GET LIST OF PREVIOUSLY EDITED FILE IN DIRECTORY
+getDirList (){
+    PARAM_PATH=$(realpath $1)
+
+    getDirFiles $PARAM_PATH | grep "$PARAM_PATH[^/]*" | cut -f 1 -d '|' | sort | uniq -c | grep -oP '^ *[0-9]+ \K.*' | while read line
+    do
+        echo $line;
+    done
+    exit 0
+}
+
+# GET BREAKPOINT ITEM IN WEDI_RC
+getBreakPoint () {
+    LINES_COUNT="$(getLinesCount)"
+    PARAM_DATE=$(date -d $2 +"%Y%m%d")
+    PARAM_PATH=$(realpath $3)
+
+    CURRENT_LINE=0
+    cat $WEDI_RC | cut -f 3 -d '|' | while read LINE
+    do
+        CURRENT_LINE=$((CURRENT_LINE+1))
+
+        ITEM_DATE=$(date -d $LINE +"%Y%m%d")
+        if [ ${1} = "-a" ]; then
+            if ! [ -z ${ITEM_DATE} ] && [ ${ITEM_DATE} -ge ${PARAM_DATE} ]; then
+                echo $( expr $CURRENT_LINE - 1)
+                return
+            elif [ ${CURRENT_LINE} = ${LINES_COUNT} ]; then
+                echo $LINES_COUNT
+            fi
+        fi
+
+        if [ ${1} = "-b" ]; then
+            if ! [ -z ${ITEM_DATE} ] && [ ${ITEM_DATE} -gt ${PARAM_DATE} ]; then
+                echo $( expr $CURRENT_LINE - 1)
+                return
+            elif [ ${CURRENT_LINE} = ${LINES_COUNT} ]; then
+                echo $LINES_COUNT
+            fi
+        fi
+    done
+}
+
+# GET LIST OF EDITED FILES BEFOR OR AFTER GIVEN DATE
+getListByDate (){
+    PARAM_DATE=$(date -d $2 +"%Y%m%d")
+    PARAM_PATH=$(realpath $3)
+
+    LINES_COUNT="$(getLinesCount)"
+
+    if [ ${1} = "-a" ]; then
+        BREAKPOINT=$(getBreakPoint $1 $2 $3)
+        if [ ${BREAKPOINT} -eq $LINES_COUNT ]; then
+            echo $ERROR_NO_MATCHING_ITEMS >&2;
+            exit 1
+        fi
+
+        cat $WEDI_RC | tail -n $( expr $LINES_COUNT - $BREAKPOINT) | grep "$PARAM_PATH[^/]*" | cut -f 1 -d '|' | sort | uniq -c | grep -oP '^ *[0-9]+ \K.*' | while read LINE
+        do
+            if [ -f ${PARAM_PATH}/${LINE} ]; then
+                echo $LINE >&2;
+            fi
+        done
+    elif [ ${1} = "-b" ]; then
+        BREAKPOINT=$(getBreakPoint $1 $2 $3)
+        if [ ${BREAKPOINT} -eq 0 ]; then
+            echo $ERROR_NO_MATCHING_ITEMS >&2;
+            exit 1
+        fi
+
+        cat $WEDI_RC | head -n $BREAKPOINT | grep "$PARAM_PATH[^/]*" | cut -f 1 -d '|' | sort | uniq -c | grep -oP '^ *[0-9]+ \K.*' | while read LINE
+        do
+            if [ -f ${PARAM_PATH}/${LINE} ]; then
+                echo $LINE >&2;
+            fi
+        done
+    fi
+}
+
+# OPEN FILE IN DESIRED EDITOR
+editFile () {
+    PARAM_PATH=$(realpath $1)
+
+    if ! [  -z ${EDITOR} ]; then
+        $EDITOR $PARAM_PATH;
+    elif ! [  -z ${VISUAL} ]; then
+        $VISUAL $PARAM_PATH;
+    else
+        vi $PARAM_PATH;
+    fi
+
+    echo "${PARAM_PATH##*/}|$(realpath ${PARAM_PATH})|$(date +%Y-%m-%d)" >> $(realpath ${WEDI_RC})
+    exit 0
+}
+
+#OPEN DESIRED FILE IN DIRECTORY
+editDir () {
+    PARAM_PATH=$(realpath $1)
+    FILE_PATH="$(getLastEdit $PARAM_PATH)"
+
+    if ! [ -z ${FILE_PATH} ]; then
+        editFile $FILE_PATH
+        exit 0
+    else
+        echo $ERROR_NO_PREV_EDITED_FILE >&2;
+        exit 1
+    fi
+}
+
+# ARGUMENTS HANDLER
+if [ ${#} -eq 0 ]; then
+    PARAM_PATH=$(pwd -P)
+    editDir $PARAM_PATH
+    exit 0
+elif [ ${#} -eq 1 ]; then
+    PARAM_PATH=$1
+
+    if [ ${1} = "-m" ]; then
+        PARAM_PATH=$(pwd -P)
+        getMostEdit $PARAM_PATH
+        exit 0
+    elif [ ${1} = "-l" ]; then
+        PARAM_PATH=$(pwd -P)
+        getDirList $PARAM_PATH
+        exit 0
+    else
+        if [ -f ${PARAM_PATH} ]; then
+            editFile $PARAM_PATH
+            exit 0
+        elif [ -d ${PARAM_PATH} ]; then
+            editDir $PARAM_PATH
+            exit 0
+        else
+            echo $ERROR_NOT_FILE_NOT_DIR >&2;
+            exit 1
+        fi
+    fi
+elif [ ${#} -eq 2 ]; then
+    PARAM_PATH=$2
+    case "$1" in
+        -m)
+            getMostEdit $PARAM_PATH
+            exit 0
+            ;;
+        -l)
+            getDirList $PARAM_PATH
+            exit 0
+            ;;
+        -b|-a)
+            PARAM_PATH=$(pwd -P)
+            PARAM_DATE=$2
+            getListByDate $1 $PARAM_DATE $PARAM_PATH
+            exit 0
+            ;;
+        *)
+            echo $ERROR_INVALID_USE_ARG >&2;
+            exit 1
+            ;;
+    esac
+elif [ ${#} -eq 3 ]; then
+    PARAM_DATE=$2
+    PARAM_PATH=$3
+
+    case "$1" in
+        -b|-a)
+            getListByDate $1 $PARAM_DATE $PARAM_PATH
+            exit 0
+            ;;
+        *)
+            echo $ERROR_INVALID_USE_ARG >&2;
+            exit 1
+            ;;
+    esac
+fi
