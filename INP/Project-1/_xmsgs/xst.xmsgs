@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- IMPORTANT: This is an internal file that has been generated
+     by the Xilinx ISE software.  Any direct editing or
+     changes made to this file may result in unpredictable
+     behavior or data corruption.  It is strongly advised that
+     users do not edit the contents of this file. -->
+<messages>
+<msg type="error" file="HDLParsers" num="164" delta="new" >&quot;<arg fmt="%s" index="1">C:/fitkitSVN/apps/demo/xhrusk25/fpga/ledc8x8.vhd</arg>&quot; Line <arg fmt="%d" index="2">9</arg>. <arg fmt="%s" index="3">parse error, unexpected CLOSEPAR, expecting IDENTIFIER</arg>
+</msg>
+
+<msg type="warning" file="HDLParsers" num="3481" delta="new" >Library <arg fmt="%s" index="1">work</arg> has no units. Did not save reference file &quot;<arg fmt="%s" index="2">build/fpga/work/hdllib.ref</arg>&quot; for it.
+</msg>
+
+</messages>
+
