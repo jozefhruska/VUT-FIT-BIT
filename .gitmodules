@@ -2,3 +2,7 @@
 	path = IVS/Project-2
 	url = https://github.com/jozefhruska/IVS-Project_2.git
 	branch = master
+[submodule "IFJ"]
+	path = IFJ
+	url = https://github.com/jozefhruska/IFJ-Project.git
+	branch = master
