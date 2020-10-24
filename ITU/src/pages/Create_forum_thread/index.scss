@@ -1,0 +1,18 @@
+@import '../../styles/style.scss';
+
+.create-new-thread{
+	form{
+		input{
+			width:100%;
+		}
+
+		textarea{
+			margin-top:20px;
+			width:100%;
+		}
+
+		button{
+			margin-top:20px;
+		}
+	}
+}

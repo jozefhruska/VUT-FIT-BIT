@@ -1,0 +1,16 @@
+@import '../../styles/style.scss';
+
+.administrative-procedures{
+	.new-application-button{
+		@include media-breakpoint-up(md){
+			text-align:right;
+		}
+	}
+
+	.table-of-procedures{
+		overflow-x:auto;
+		table{
+			width:100%;
+		}
+	}
+}

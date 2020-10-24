@@ -1,0 +1,102 @@
+@import '../../styles/style.scss';
+
+.timetable-edit{
+
+	.legend{
+		p{
+			.label {
+				position: relative;
+				display:inline-block;
+				width:20px;
+				height: 20px;
+				padding-left: 20px;
+
+				&::before {
+					content: "";
+					position: absolute;
+					top: 50%;
+					left: 0;
+					width: 10px;
+					height: 10px;
+					background: black;
+				}
+				
+				&.label-choosen::before {
+					background: $color__red;
+				}
+
+				&.label-lecture::before {
+					background: $color__green;
+				}
+
+				&.label-practice::before {
+					background: $color__blue;
+				}
+
+				&.label-practice-lecture::before {
+					background: $color__yellow;
+				}
+			}
+		}
+		
+	}
+
+	overflow-x:auto;
+	table{
+		width:100%;
+		tr {
+			.filled_bg_lecture,
+			.filled_bg_practice,
+			.filled_bg_practice_lecture,
+			.filled_bg_sport{
+				&:hover{
+					cursor: pointer;
+				}
+			}
+
+			.filled_bg_header {
+				background-color: $color__gray_500;
+				color: white;
+				font: {
+					family: Roboto-Bold;
+				}
+			}
+
+			.filled_bg_lecture {
+				background-color: $color__green;
+				color: white;
+			}
+
+			.filled_bg_practice {
+				background-color: $color__blue;
+				color: white;
+			}
+
+			.filled_bg_sport {
+				background-color: $color__red;
+				color: white;
+			}
+
+			.filled_bg_practice_lecture {
+				background-color: $color__yellow;
+				color: white;
+			}
+
+			td {
+				padding: 5px 0;
+				text-align: center;
+				border: 1px solid white;
+				background-color:$color__gray_200;
+			}
+
+			.toggled{
+				background-color: $color__red;
+			}
+		}
+	}
+
+	.timetable-edit-save-button{
+		text-align:right;
+		margin-top:10px;
+	}
+}

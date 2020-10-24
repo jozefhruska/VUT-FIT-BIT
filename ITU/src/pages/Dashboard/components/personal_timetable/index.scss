@@ -1,0 +1,64 @@
+@import '../../../../styles/style.scss';
+
+.personal-timetable {
+	overflow-x: auto;
+	position:relative;
+
+	h2 {
+		padding: 0px;
+		margin: 20px 0px 0px 0px;
+	}
+
+	hr {
+		width: 80%;
+		float: left;
+	}
+
+	.timetable {
+		table {
+			margin-top: 5px;
+			width: 100%;
+			tr {
+				.filled_bg_header {
+					background-color: $color__gray_500;
+					color: white;
+					font: {
+						family: Roboto-Bold;
+					}
+				}
+
+				.filled_bg_lecture {
+					background-color: $color__green;
+					color: white;
+				}
+
+				.filled_bg_practice {
+					background-color: $color__blue;
+					color: white;
+				}
+
+				.filled_bg_sport {
+					background-color: $color__red;
+					color: white;
+				}
+
+				.filled_bg_practice_lecture {
+					background-color: $color__yellow;
+					color: white;
+				}
+
+				td {
+					padding: 5px 0;
+					text-align: center;
+					border: 1px solid white;
+					background-color:$color__gray_200;
+				}
+			}
+		}
+	}
+
+	.edit-timetable-button{
+		text-align:right;
+		margin-top:10px;
+	}
+}

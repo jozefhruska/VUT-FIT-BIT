@@ -1,0 +1,12 @@
+@import '../../styles/style.scss';
+
+.courses-info{
+	table{
+		width:100%;
+	}
+
+	.summer-semester,
+	.winter-semester{
+		overflow-x:auto;
+	}
+}

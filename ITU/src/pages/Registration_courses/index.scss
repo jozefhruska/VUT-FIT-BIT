@@ -1,0 +1,26 @@
+@import '../../styles/style.scss';
+
+.semester-courses{
+	overflow-x:auto;
+	
+	table{
+		width:100%;
+		tr {
+			&.table-compulsory{
+				background-color:$color__blue;
+			}
+
+			&.table-volatile{
+				background-color:$color__gray_100;
+				border-bottom:1px solid $color__gray_300;
+				td{
+					color:$color__gray_500;
+				}
+			}
+
+			td{
+				background-color:transparent;
+			}
+		}
+	}
+}

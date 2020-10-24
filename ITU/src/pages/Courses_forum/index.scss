@@ -1,0 +1,15 @@
+@import '../../styles/style.scss';
+
+.course-forum{
+	margin-top:20px;
+	.course-forum-topics{
+		overflow-x:auto;
+		table{
+			width:100%;
+
+			.closed{
+				opacity:.4;
+			}
+		}
+	}
+}

@@ -1,0 +1,80 @@
+@import '../../../../styles/style.scss';
+
+.menu-item-wrapper {
+	.menu-item {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		position: relative;
+		width: 100%;
+		list-style: none;
+		padding: 15px 10px 15px 5px;
+		font-weight: 500;
+		overflow: hidden;
+
+		&::before {
+			content: "";
+			transition: transform .3s ease;
+			transform: translateX(-5px);
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 5px;
+			height: 100%;
+			border-top-right-radius: 3px;
+			border-bottom-right-radius: 3px;
+			background: $color__blue;
+		}
+
+		&:hover {
+			cursor: pointer;
+
+			&::before {
+				transform: translateX(0);
+			}
+		}
+
+		svg {
+			margin: 0px 20px;
+			color: $color__gray_300;
+		}
+
+		.arrowDown {
+			transform: translateY(-50%);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			position: absolute;
+			top: 50%;
+			right: 10px;
+			width: 20px;
+			height: 20px;
+			background: $color__gray_200;
+
+			svg {
+				transform: translateY(-3px);
+				margin: 0;
+			}
+		}
+	}
+
+	.menu-item-active {
+		color: $color__blue;
+
+		&::before {
+			border-radius: 0;
+			transform: translateX(0);
+		}
+
+		svg {
+			color: $color__blue;
+		}
+	}
+
+	.menu-item-submenu {
+		.menu-item {
+			padding-left: 20px;
+			border-left: 5px solid $color__blue;
+		}
+	}
+}

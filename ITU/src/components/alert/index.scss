@@ -1,0 +1,32 @@
+@import '../../styles/style.scss';
+
+.alert {
+	background-color: $color__dblue;
+	color: white;
+	display: flex;
+	align-items: center;
+	padding: 10px 0;
+	border-radius: 3px;
+	margin-top:20px;
+
+	p {
+		margin: 0px;
+		padding: 7px 0px;
+		flex: 1;
+	}
+
+	.info-icon {
+		width: 25px;
+		margin-left: 20px;
+		margin-right: 10px;
+	}
+
+	.cross-icon {
+		width: 15px;
+		margin-right: 20px;
+
+		&:hover {
+			cursor: pointer;
+		}
+	}
+}

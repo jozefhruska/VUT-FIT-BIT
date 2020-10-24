@@ -1,0 +1,70 @@
+@import '../../../../styles/style.scss';
+
+.grades {
+	h2 {
+		padding: 0px;
+		margin: 20px 0px 0px 0px;
+	}
+
+	hr {
+		width: 80%;
+		float: left;
+	}
+
+	.grades-content {
+		table {
+			margin-top: 5px;
+			width: 100%;
+
+			tr {
+				&:hover{
+					cursor: pointer;
+				}
+
+				td {
+					padding: 5px 10px;
+					img {
+						width: 20px;
+					}
+				}
+			}
+
+			.grades-header {
+				background-color: $color__gray_500 !important;
+				color: white;
+				td {
+					background-color:transparent;
+					font: {
+						family: Roboto-Bold;
+					}
+				}
+			}
+
+			.grades-passed {
+				background-color: $color__green !important;
+				color: white;
+				td {
+					background-color:transparent;
+				}
+			}
+
+			.grades-failed {
+				background-color: $color__red !important;
+				color: white;
+				td {
+					background-color:transparent;
+				}
+			}
+		}
+
+		.show-more-grades{
+			display: flex;
+			justify-content: flex-start;
+			margin-top:10px;
+
+			@include media-breakpoint-up(md) {
+				justify-content: flex-end;
+			}
+		}
+	}
+}

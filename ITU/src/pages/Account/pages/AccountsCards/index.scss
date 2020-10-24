@@ -1,0 +1,73 @@
+@import '../../../../styles/style.scss';
+
+.InfoAccounts {
+
+	.AccountWrapper {
+		margin-bottom: 20px;
+
+		&--last {
+			margin-bottom: 0;
+		}
+	}
+
+	.c-InfoAccount {
+		transition: border-color .3s ease;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		min-height: 140px;
+		padding: 20px;
+		background: white;
+		border: 1px solid $color__gray_200;
+		border-radius: 3px;
+
+		&:hover {
+			cursor: pointer;
+			border-color: $color__gray_400;
+		}
+	}
+}
+
+.InfoCards {
+
+	.CardWrapper {
+		margin-bottom: 20px;
+
+		&--last {
+			margin-bottom: 0;
+		}
+	}
+
+	.c-InfoCard {
+		transition: border-color .3s ease;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		min-height: 140px;
+		padding: 20px;
+		background: white;
+		border: 1px solid $color__gray_200;
+		border-radius: 3px;
+
+		&:hover {
+			cursor: pointer;
+			border-color: $color__gray_400;
+		}
+
+		&--is-valid {
+			position: relative;
+
+			&::after {
+				content: "Valid";
+				position: absolute;
+				top: -8px;
+				right: -8px;
+				padding: 5px 8px;
+				font-size: .8rem;
+				color: white;
+				border-radius: 3px;
+				background: $color__green;
+			}
+		}
+	}
+}

@@ -1,0 +1,32 @@
+@import '../../node_modules/bootstrap/scss/bootstrap-grid.scss';
+@import '../../node_modules/bootstrap/scss/bootstrap-reboot.scss';
+
+/* Colors set */
+@import 'colors';
+
+/* Typography */
+@import 'typo';
+
+/* Buttons */
+@import 'buttons';
+
+/* Tables */
+@import 'tables';
+
+/* Content block */
+@import 'block';
+
+/* Macros */
+@import 'macros';
+
+/* Main */
+body {
+	padding: 0;
+	margin: 0;
+	color: $color__gray_400;
+	overflow-x: hidden;
+}
+
+.clearfix {
+	clear: both;
+}

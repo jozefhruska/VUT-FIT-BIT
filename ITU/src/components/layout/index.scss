@@ -1,0 +1,143 @@
+@import '../../styles/style.scss';
+
+$menu_width: 300px;
+
+.page-layout {
+	padding-top: 70px;
+
+	.c-siteHeader {
+		display: flex;
+		justify-content: space-between;
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 1000;
+		width: 100%;
+		height: 70px;
+		padding-right: 20px;
+		background: white;
+		border-bottom: 1px solid $color__gray_200;
+		overflow: hidden;
+
+		&__section {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+		}
+
+		&__toggle {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 0 20px;
+			height: 70px;
+			background: white;
+			border: none;
+			border-right: 1px solid $color__gray_200;
+
+			@include media-breakpoint-up(lg) {
+				display: none;
+			}
+
+			&:focus {
+				outline: none;
+			}
+		}
+
+		&__brand {
+			display: none;
+
+			@include media-breakpoint-up(lg) {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				width: $menu_width;
+				height: 100%;
+
+				img {
+					max-width: 100%;
+					max-height: 46px;
+				}
+			}
+		}
+
+		&__title {
+			display: none;
+
+
+			@include media-breakpoint-up(lg) {
+				display: flex;
+				align-items: center;
+				padding-left: 20px;
+				height: 50px;
+				border-left: 1px solid $color__gray_200;
+				font-weight: 500;
+			}
+		}
+
+		&__user {
+			display: flex;
+			align-items: center;
+
+			.name {
+				font-weight: 500;
+				color: $color__gray_500;
+				margin-right: 15px;
+			}
+		}
+	}
+
+	.page-layout-content {
+		display: flex;
+		flex-direction: row;
+
+		@include media-breakpoint-down(md) {
+			flex-direction: column;
+		}
+
+		.menuDummy {
+			display: none;
+
+			@include media-breakpoint-up(lg) {
+				display: block;
+				width: $menu_width;
+				min-height: calc(100vh - 70px);
+			}
+		}
+
+		.menu {
+			transition: transform 0.3s ease;
+			position: fixed;
+			z-index: 900;
+			width: 100%;
+			min-height: calc(100vh - 70px);
+			padding-top: 15px;
+			transform: translateX(-100%);
+			background: white;
+			border-right: 1px solid $color__gray_200;
+			overflow-y: auto;
+
+			&--is-visible {
+				transform: translateX(0);
+			}
+
+			@include media-breakpoint-up(lg) {
+				transform: translateX(0);
+				width: $menu_width;
+				top: 70px;
+				left: 0;
+			}
+		}
+
+		.content {
+			flex: 1;
+			min-height: calc(100vh - 70px);
+			padding:20px;
+			background-color: $color__gray_100;
+
+			&.ntp{
+				padding-top:0px;
+			}
+		}
+	}
+}
