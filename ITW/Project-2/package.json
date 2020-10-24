@@ -1,0 +1,19 @@
+{
+  "name": "project-2",
+  "version": "1.0.0",
+  "private": true,
+  "author": "Jozef Hruška",
+  "scripts": {
+    "gulp:sass": "gulp sass",
+    "gulp:sass:watch": "gulp sass:watch"
+  },
+  "devDependencies": {
+    "@babel/core": "~7.9.0",
+    "autoprefixer": "~9.7.6",
+    "gulp": "~4.0.2",
+    "gulp-babel": "~8.0.0-beta.2",
+    "gulp-postcss": "~8.0.0",
+    "gulp-sass": "~4.0.2",
+    "gulp-sourcemaps": "~2.6.5"
+  }
+}

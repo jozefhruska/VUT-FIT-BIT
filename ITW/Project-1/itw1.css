@@ -1,0 +1,258 @@
+/* Variables */
+/* Main */
+html,
+body {
+  padding: 0;
+  margin: 0; }
+
+/* Typography */
+body {
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  font-weight: lighter;
+  color: #868e96;
+  background: #f8f9fa; }
+
+p {
+  margin: 0 0 10px;
+  line-height: 1.8; }
+
+a {
+  text-decoration: none;
+  color: #ee0427; }
+  a:hover {
+    color: #005dd0; }
+
+h1 {
+  margin: 0 0 20px;
+  font-size: 62px;
+  font-weight: lighter;
+  color: white; }
+
+h3 {
+  margin: 0 0 10px;
+  font-weight: lighter;
+  color: #212529; }
+
+h4 {
+  font-size: 22px;
+  margin: 0 0 10px;
+  font-weight: lighter; }
+
+/* Layout */
+.content {
+  max-width: 1140px;
+  padding: 0 20px;
+  margin: 0 auto; }
+
+section {
+  padding: 100px 0;
+  text-align: center; }
+  section.dark {
+    background: url("./img//bg.jpg") no-repeat;
+    background-size: cover;
+    color: rgba(255, 255, 255, 0.8);
+    text-align: center; }
+    section.dark h2 {
+      margin: 0 0 20px;
+      font-size: 62px;
+      font-weight: lighter;
+      color: white; }
+    section.dark .content {
+      display: flex;
+      flex-direction: column;
+      align-items: center; }
+    section.dark p.sub-heading {
+      max-width: 500px;
+      margin: 0; }
+      section.dark p.sub-heading:not(:last-child) {
+        padding-bottom: 40px; }
+  section:not(.dark) {
+    background: white; }
+    section:not(.dark) h2 {
+      margin: 0 0 40px;
+      font-size: 32px;
+      font-weight: lighter;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: #212529; }
+
+/* Misc */
+.btn {
+  padding: 10px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.8);
+  text-transform: uppercase;
+  display: inline-block; }
+  .btn:hover {
+    background: rgba(255, 255, 255, 0.8);
+    color: #212529; }
+
+/* Navbar */
+nav#navbar {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px 0; }
+  nav#navbar .content ul.navbar-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    list-style: none; }
+    nav#navbar .content ul.navbar-nav li {
+      padding: 10px 20px; }
+      nav#navbar .content ul.navbar-nav li a {
+        font-weight: lighter;
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: 0.2em; }
+
+/* Home */
+section#section-home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 95vh;
+  padding: 0; }
+
+/* About */
+section#section-about .content {
+  display: flex;
+  flex-wrap: wrap; }
+
+section#section-about .photos {
+  display: flex;
+  flex: 2; }
+  section#section-about .photos p {
+    flex: 1;
+    max-width: calc(100% / 3);
+    min-width: 350px; }
+    section#section-about .photos p:not(:last-child) {
+      margin-right: 20px; }
+  section#section-about .photos img {
+    width: 100%; }
+
+section#section-about .descript {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  max-width: calc(100% / 3);
+  min-width: 350px;
+  margin-left: 40px;
+  text-align: left; }
+
+/* Menu */
+section#section-menu ul.tabs {
+  padding: 0;
+  margin: 40px 0;
+  list-style: none; }
+  section#section-menu ul.tabs li {
+    display: inline-block;
+    padding: 10px; }
+  section#section-menu ul.tabs .btn {
+    color: #868e96;
+    border-color: #868e96; }
+    section#section-menu ul.tabs .btn.active {
+      border-color: black;
+      color: black; }
+
+section#section-menu .menucols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+  grid-column-gap: 40px; }
+  section#section-menu .menucols ul {
+    flex: 1;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-align: left; }
+    section#section-menu .menucols ul li {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px; }
+    section#section-menu .menucols ul .price {
+      color: #212529; }
+
+/* Gallery */
+section#section-gallery .photos {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-column-gap: 20px; }
+  section#section-gallery .photos img {
+    width: 100%; }
+
+/* Testimonials */
+section#section-testimonials {
+  background: #e4f8f4; }
+  section#section-testimonials .content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 20px; }
+  section#section-testimonials h2 {
+    grid-column: 1 / -1; }
+  section#section-testimonials .testimonial {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 10px; }
+    section#section-testimonials .testimonial blockquote {
+      position: relative;
+      padding: 100px 0 0;
+      margin: 0;
+      font-family: "Crimson Text", serif;
+      color: #212529; }
+      section#section-testimonials .testimonial blockquote::before {
+        content: "\201C";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        font-size: 128px; }
+    section#section-testimonials .testimonial img.rounded-circle {
+      width: 80px;
+      height: 80px;
+      margin: 20px 0;
+      border-radius: 50%; }
+    section#section-testimonials .testimonial p.name {
+      color: #212529; }
+    section#section-testimonials .testimonial p.nick {
+      color: rgba(0, 0, 0, 0.4); }
+
+/* Events */
+section#section-events {
+  background: #f8f9fa; }
+  section#section-events .card-deck {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-gap: 40px; }
+    section#section-events .card-deck .card {
+      text-align: left;
+      height: 100%;
+      background: white; }
+      section#section-events .card-deck .card img.card-img-top {
+        width: 100%; }
+      section#section-events .card-deck .card .card-body {
+        padding: 20px; }
+        section#section-events .card-deck .card .card-body small {
+          text-transform: uppercase; }
+
+/* Footer */
+footer#footer {
+  margin-bottom: 100px;
+  text-align: center; }
+  footer#footer a {
+    color: black; }
+    footer#footer a:hover {
+      color: #ee0427; }
