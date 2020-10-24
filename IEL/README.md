@@ -2,6 +2,6 @@
 
 Semestral project for "Electronics for Information Technology" course.
 
-| Year | Points |
-| ---- | ------ |
-| 2018 | 7.5/12 |
+| Academic year | Obtained points |
+| ------------- | --------------- |
+| 2017(W)       | 7.5/12          |
