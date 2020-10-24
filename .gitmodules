@@ -6,3 +6,7 @@
 	path = IFJ
 	url = https://github.com/jozefhruska/IFJ-Project.git
 	branch = master
+[submodule "IBT"]
+	path = IBT
+	url = https://github.com/jozefhruska/slackify.git
+	branch = master
