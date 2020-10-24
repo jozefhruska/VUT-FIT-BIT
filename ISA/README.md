@@ -1,6 +1,6 @@
 # Network Applications and Network Administration
 
-Semestral project for "Network Applications and Network Administration" course.
+Semestral project for "Network Applications and Network Administration" course (DHCPv6 relay).
 
 | Academic year | Obtained points |
 | ------------- | --------------- |
